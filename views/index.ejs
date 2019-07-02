@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>
+            <%= title%>
+        </title>
+        <link rel="stylesheet" type="text/css" href="./style.css">
+    </head>
+    <body>
+        <div id="main">
+                <h1><i class="fas fa-address-book"></i> Contact list</h1>
+                <div id="contact-list">
+                    <ul>
+                     <%   for(let i of contact_list){   %>
+                        <li> <%=i.name%> :  <%=i.phone%> <a href="/delete-contact/?phone=<%=i.phone%>&name=<%=i.name%>" class="hide"><i class="fas fa-window-close"></i></a> 
+                        </li>
+                     <%   }               %>
+                    </ul>
+                </div>
+                <div id='contact-form'>
+                    <form action="/" method="POST">
+                    <input type="text" name="name" placeholder="Enter name" required>
+                    <input type="text" name="phone" placeholder="Enter phone number" required>
+                    <button type="submit">Add contact</button>
+                    </form>
+                </div>
+        </div>
+        
+        <!-- font awesome link -->
+        <script src="https://kit.fontawesome.com/5b8969f8ab.js"></script>
+        <script type="text/javascript" src="./script.js"></script>
+    </body>
+</html>
