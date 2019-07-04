@@ -4,7 +4,7 @@ const app=express();
 
 const path=require('path');
 
-//setting template/view engine
+//setting ejs template/view engine
 app.set('view engine','ejs');
 
 //setting view folder
