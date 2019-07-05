@@ -1,5 +1,7 @@
 const express=require('express');
 const port=8000;  
+const db=require('./config/mongoose');
+const Contact=require('./models/contact');
 const app=express();
 
 const path=require('path');
@@ -17,30 +19,55 @@ var arr=[];
 app.use(express.urlencoded());
 
 app.get('/',function(req,res){
-    return res.render('index',{
-        title:"Contact List",
-        contact_list:arr
+    Contact.find(
+        {}
+        ,
+        function(err,contacts){    
+            if(err){
+                console.log('error in fetching contacts');
+                return;
+            }
 
-    });
+            return res.render('index',{
+                title:'Contact List',
+                contact_list:contacts
+            });
+        }
+    );
 });
 
 app.post('/',function(req,res){
-    arr.push(req.body);   
-    return res.redirect('back');  //to redirect back to home page after this.
+    Contact.create(
+        {
+            name:req.body.name,
+            phone:req.body.phone
+        }
+        , function(err,newContact){ 
+            if(err){
+                console.log('error in creating new contact');
+                return;
+            }
+            console.log('*********The new contact created is: ',newContact);
+            return res.redirect('back'); 
+            //to redirect back to home page after this.
+        }
+
+
+    );
 });
 
 
 app.get('/delete-contact/',function(req,res){
-    // console.log(req.query.name);
-    // console.log(req.query.phone);
-
-    for(var i=0;i<arr.length;i++){
-        if(arr[i].phone==req.query.phone){
-            arr.splice(i,1);
-            break;
+    let id=req.query.id; //to fetch the value of query id from url received by request
+    Contact.findByIdAndDelete(id,function(err){
+        if(err){
+            console.log('can\'t delete');
+            return;
         }
-    }
-    return res.redirect('back');
+        //otherwise if no error i.e delete is successful
+        return res.redirect('back');
+
+    });
 
 });
 

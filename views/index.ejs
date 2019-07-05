@@ -11,7 +11,7 @@
                 <div id="contact-list">
                     <ul>
                      <%   for(let i of contact_list){   %>
-                        <li> <%=i.name%> :  <%=i.phone%> <a href="/delete-contact/?phone=<%=i.phone%>&name=<%=i.name%>" class="hide"><i class="fas fa-window-close"></i></a> 
+                        <li> <%=i.name%> :  <%=i.phone%> <a href="/delete-contact/?id=<%= i._id%>" class="hide"><i class="fas fa-window-close"></i></a> 
                         </li>
                      <%   }               %>
                     </ul>
